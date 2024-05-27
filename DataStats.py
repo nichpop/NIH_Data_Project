@@ -1,7 +1,10 @@
 import numpy as np
+import pandas as pd
+import os
 
 data1 = np.load('HF-448_V5B_1.h5_3.npy')
 data2 = np.load('HF-868_1_2.h5_4.npy')
+
 
 # basic stats
 mean1 = np.mean(data1)
@@ -22,3 +25,24 @@ print(f"Median: {median1}, {median2}")
 print(f"Standard Deviation: {std_dev1}, {std_dev2}")
 print(f"Minimum Value: {min_value1}, {min_value1}")
 print(f"Maximum Value: {max_value1}, {max_value1}")
+
+# save excel and flatten
+# Load the .npy file
+data = np.load('HF-448_V5B_1.h5_3.npy')
+
+# Flatten the 3D array to a 2D array
+flat_data = []
+
+for i in range(data.shape[0]):
+    for j in range(data.shape[1]):
+        for k in range(data.shape[2]):
+            flat_data.append([i, j, k, data[i, j, k]])
+
+# Convert the flattened data to a DataFrame
+df = pd.DataFrame(flat_data, columns=['dim1', 'dim2', 'dim3', 'value'])
+
+# Select a subset of the data that fits into an Excel sheet
+# Excel sheet limit is 1,048,576 rows
+max_rows = 100000
+df_subset = df.iloc[:max_rows]
+df_subset.to_excel('flattened_HF-448_V5B_1.h5_3.xlsx', index=False)
