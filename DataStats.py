@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import os
 
 data1 = np.load('HF-448_V5B_1.h5_3.npy')
 data2 = np.load('HF-868_1_2.h5_4.npy')
