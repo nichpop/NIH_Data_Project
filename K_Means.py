@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
 
 # load, flatten, and categorize data
 data = np.load('HF-448_V5B_1.h5_3.npy')
@@ -12,12 +13,32 @@ flattened_data = data.reshape(-1, num_spectral_points)
 # Normalize the spectral data
 scaler = StandardScaler()
 flattened_data = scaler.fit_transform(flattened_data)
+'''
+#pca on data?
+from sklearn.decomposition import PCA
+pca = PCA(n_components=2)
+flattened_data = pca.fit_transform(flattened_data)
 
+# helper to determine optimal amount of clusters using sillhouette score
+def find_optimal_clusters(data, max_k):
+    iters = range(2, max_k + 1)
+    s = []
+
+    for k in iters:
+        kmeans = KMeans(n_clusters=k, random_state=1)
+        kmeans.fit(data)
+        s.append(silhouette_score(data, kmeans.labels_))
+
+    optimal_k = iters[np.argmax(s)]
+    print(f"Optimal number of clusters: {optimal_k}")
+    return optimal_k
+
+# Determine the optimal number of clusters
+optimal_clusters = find_optimal_clusters(flattened_data, 10)
+'''
 # k-means clustering
-n_clusters = 2
-kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-
-# fit model to the data
+optimal_clusters = 6
+kmeans = KMeans(n_clusters= optimal_clusters, random_state=1)
 kmeans.fit(flattened_data)
 
 # get the cluster labels
