@@ -19,9 +19,10 @@ def baseline_als(y, lam, p, niter=10):
     return z
 
 # Choose a spectrum to plot
-spectrum = data[0, 0, :]
+spectrum = data[30, 30, :]
 
 # Calculate the baseline
+spectrum = np.concatenate((spectrum[104:907], spectrum[1374:]))
 baseline = baseline_als(spectrum, 10000, 0.01)
 
 # Plot the original spectrum and the baseline
@@ -36,6 +37,8 @@ plt.figure(figsize=(10, 6))
 plt.plot(spectrum - baseline, label='Corrected')
 plt.legend()
 plt.show()
+
+
 
 # Apply Savitzky-Golay filtering
 filtered_spectrum = savgol_filter(spectrum, 11, 3)
@@ -63,7 +66,8 @@ for i in range(data.shape[0]):
         normalized_data[i, j, :] = normalized_spectrum
 
 # Select a spectrum to plot
-normalized_spectrum = normalized_data[0, 0, :]
+normalized_spectrum = normalized_data[30, 30, :]
+
 
 # Plot the original and normalized spectra
 plt.figure(figsize=(10, 6))
@@ -72,10 +76,14 @@ plt.plot(normalized_spectrum, label='Normalized')
 plt.legend()
 plt.show()
 
+
+
+
 # Select a spectrum
-spectrum = data[0, 0, :]
+spectrum = data[30, 30, :]
 
 # Calculate the baseline
+spectrum = np.concatenate((spectrum[104:907], spectrum[1374:]))
 baseline = baseline_als(spectrum, 10000, 0.01)
 
 # Subtract the baseline

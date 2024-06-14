@@ -3,7 +3,12 @@ import pandas as pd
 
 data1 = np.load('HF-448_V5B_1.h5_3.npy')
 data2 = np.load('HF-868_1_2.h5_4.npy')
-
+print(data1.shape)
+print(data2.shape)
+data1 = np.concatenate((data1[:, :, :104], data1[:, :, 907:1374], data1[:, :, 1374:]), axis=2)
+data2 = np.concatenate((data2[:, :, :104], data2[:, :, 907:1374], data2[:, :, 1374:]), axis=2)
+print(data1.shape)
+print(data2.shape)
 
 # basic stats
 mean1 = np.mean(data1)
