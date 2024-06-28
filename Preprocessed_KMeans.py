@@ -44,7 +44,7 @@ for i in range(data.shape[0]):
 # Normalize the entire dataset so that the sum of all intensities is 1
 total_intensity_sum = np.sum(preprocessed_data)
 preprocessed_data /= total_intensity_sum
-
+'''
 # Now run k-means on preprocessed_data
 # flatten data
 flattened_data = preprocessed_data.reshape(-1, num_spectral_points)
@@ -85,3 +85,4 @@ plt.ylabel('Intensity')
 plt.title('Cluster Centers (Spectral Profiles)')
 plt.legend()
 plt.show()
+'''
